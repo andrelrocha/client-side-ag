@@ -1,6 +1,16 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
+
+interface TokenPayload {
+  sub: string;
+  roles: Array<String>;
+  iss: string;
+  id: string;
+  exp: number;
+  iat: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +21,7 @@ export class Auth {
   constructor(private http: HttpClient) {}
 
   login(login: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/signin`, {
-      login, password
-    });
+    return this.http.post(`${this.apiUrl}/auth/signin`, { login, password });
   }
 
   setToken(token: string): void {
@@ -26,5 +34,11 @@ export class Auth {
 
   logout(): void {
     localStorage.removeItem('auth_token');
+  }
+
+  getTokenPayload(): TokenPayload | null {
+    const token = this.getToken();
+    if (!token) return null;
+    return jwtDecode(token);
   }
 }
