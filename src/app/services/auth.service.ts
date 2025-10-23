@@ -11,7 +11,9 @@ export class Auth {
   constructor(private http: HttpClient) {}
 
   login(login: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/signin`, { login, password });
+    return this.http.post(`${this.apiUrl}/auth/signin`, {
+      login, password
+    });
   }
 
   setToken(token: string): void {
@@ -20,10 +22,6 @@ export class Auth {
 
   getToken(): string | null {
     return localStorage.getItem('auth_token');
-  }
-
-  isLoggedIn(): boolean {
-    return !!this.getToken();
   }
 
   logout(): void {
