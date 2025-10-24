@@ -27,7 +27,14 @@
         />
       </div>
 
-      <button class="btn btn-primary w-100" type="submit">Entrar</button>
+      <button class="btn btn-primary w-100" type="submit" [disabled]="isLoading">
+        @if (!isLoading) {
+          Entrar
+        } @else {
+          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          Entrando...
+        }
+      </button>
 
       @if (errorMessage) {
         <div class="alert alert-danger mt-3">
