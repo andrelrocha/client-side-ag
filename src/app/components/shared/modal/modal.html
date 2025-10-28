@@ -1,7 +1,7 @@
 <div class="modal-container">
   <div class="modal-header">
     <h2 class="modal-title">{{ data.title }}</h2>
-    <a class="modal-close" (click)="close()" aria-label="Fechar">×</a>
+    <button class="modal-close" (click)="close()" aria-label="Fechar">×</button>
   </div>
 
   <div class="modal-body">
@@ -9,4 +9,10 @@
       <ng-container *ngTemplateOutlet="data.body; context: { dialogRef: dialogRef }"></ng-container>
     }
   </div>
+
+  @if (data.actions) {
+    <div class="modal-actions">
+      <ng-container *ngTemplateOutlet="data.actions; context: { dialogRef: dialogRef }"></ng-container>
+    </div>
+  }
 </div>

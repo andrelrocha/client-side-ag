@@ -1,19 +1,51 @@
 .modal-container {
   background: var(--mat-sys-surface-container-high);
-  color: var(--mat-sys-on-surface);
   box-shadow: 0 6px 32px var(--mat-sys-shadow, rgba(44, 52, 65, 0.12));
+  border-radius: 1.5rem;
+  max-width: 620px;
+  padding: 1.2rem;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
 }
 
 .modal-title {
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-headline-medium);
+  font-size: 1.8rem;
+  font-weight: 700;
 }
 
 .modal-close {
-  color: var(--mat-sys-on-surface-variant);
+  color: var(--mat-sys-primary);
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
-.modal-actions button[mat-raised-button] {
-  background: var(--mat-sys-primary);
-  color: var(--mat-sys-on-primary);
+.modal-close:hover {
+  color: var(--mat-sys-primary);
+}
+
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.05rem;
+  width: 100%;
+  align-items: stretch;
+}
+
+.modal-actions {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
 }

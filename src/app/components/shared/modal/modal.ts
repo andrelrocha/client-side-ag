@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 export interface ModalData {
   title?: string;
   body?: TemplateRef<any>;
+  actions?: TemplateRef<any>;
 }
 
 @Component({
@@ -19,7 +20,7 @@ export interface ModalData {
 export class Modal {
   constructor(
     public dialogRef: MatDialogRef<Modal>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: ModalData
   ) {}
 
   close() {

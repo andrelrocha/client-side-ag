@@ -29,13 +29,7 @@ $my-theme: mat.define-theme((
   @include mat.system-level-colors($my-theme);
   @include mat.all-component-themes($my-theme);
 }
-
-html {
-  --mat-sys-secondary: #5096c8;
-  --mat-sys-on-secondary: #ffffff;
-  --mat-sys-secondary-container: #184b67;
-}
-
+// ========================================
 html,
 body {
   height: 100%;
@@ -48,13 +42,12 @@ body {
 
 h2,
 p {
-  padding: 16px;
   margin: 0;
 }
 
 .form-field {
   width: 100%;
-  margin-bottom: 0.8rem;
+  color: var(--mat-sys-primary);
 }
 
 .mat-mdc-form-field {

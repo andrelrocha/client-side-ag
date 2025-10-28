@@ -17,9 +17,8 @@
   box-shadow: 0 6px 32px rgba(44, 52, 65, 0.10);
 }
 
-
 .login-title {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
 }
@@ -29,7 +28,7 @@
   margin-bottom: 1.2rem;
 }
 
-.button-spinner {
-  margin-right: 0.5rem;
-  vertical-align: middle;
+.button-group {
+  display: flex;
+  gap: 1rem;
 }

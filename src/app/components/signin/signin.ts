@@ -44,6 +44,7 @@ export class Signin {
   resetEmail = '';
 
   @ViewChild('forgotPasswordBody') forgotPasswordBody!: TemplateRef<any>;
+  @ViewChild('forgotPasswordActions') forgotPasswordActions!: TemplateRef<any>;
 
   constructor(
     private authService: Auth,
@@ -53,16 +54,16 @@ export class Signin {
   ) {}
 
   openForgotPasswordModal() {
-    const dialogRef = this.dialog.open(Modal, {
+    this.dialog.open(Modal, {
       data: {
         title: 'Esqueceu a senha?',
-        body: this.forgotPasswordBody
+        body: this.forgotPasswordBody,
+        actions: this.forgotPasswordActions,
       },
       width: '600px',
       autoFocus: false
     });
   }
-
   onSubmitForgotPassword(dialogRef: any) {
     if (!this.resetEmail) { return; }
     // Aqui, envie a solicitação de recuperação
