@@ -1,0 +1,12 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <h2 class="modal-title">{{ data.title }}</h2>
+    <a class="modal-close" (click)="close()" aria-label="Fechar">×</a>
+  </div>
+
+  <div class="modal-body">
+    @if (data.body) {
+      <ng-container *ngTemplateOutlet="data.body; context: { dialogRef: dialogRef }"></ng-container>
+    }
+  </div>
+</div>

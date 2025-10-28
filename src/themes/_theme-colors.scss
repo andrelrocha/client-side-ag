@@ -4,7 +4,7 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
-// Note: Color palettes are generated from primary: 2b4162, secondary: 385f71, tertiary: f5f0f6, error: d31f31
+// Note: Color palettes are generated from primary: #2B4162, secondary: #A9D7F9, tertiary: #F5F0F6, error: #FF4545
 $_palettes: (
   primary: (
     0: #000000,
@@ -26,20 +26,20 @@ $_palettes: (
   ),
   secondary: (
     0: #000000,
-    10: #001f2a,
-    20: #053545,
-    25: #164051,
-    30: #234b5d,
-    35: #305769,
-    40: #3c6375,
-    50: #567c8f,
-    60: #6f96aa,
-    70: #8ab1c5,
-    80: #a4cce1,
-    90: #c0e8fe,
-    95: #e1f4ff,
-    98: #f4faff,
-    99: #fafcff,
+    10: #001e2e,
+    20: #00344c,
+    25: #04405b,
+    30: #184b67,
+    35: #275774,
+    40: #346380,
+    50: #4e7c9b,
+    60: #6996b5,
+    70: #83b1d1,
+    80: #9eccee,
+    90: #c8e6ff,
+    95: #e5f2ff,
+    98: #f6faff,
+    99: #fbfcff,
     100: #ffffff,
   ),
   tertiary: (
@@ -108,17 +108,17 @@ $_palettes: (
   ),
   error: (
     0: #000000,
-    10: #410006,
-    20: #68000f,
-    25: #7d0014,
-    30: #930019,
-    35: #a9001e,
-    40: #be0625,
-    50: #e32c3a,
-    60: #ff5357,
-    70: #ff8985,
-    80: #ffb3b0,
-    90: #ffdad8,
+    10: #410004,
+    20: #68000a,
+    25: #7d000e,
+    30: #930012,
+    35: #a90017,
+    40: #bd0d1e,
+    50: #e22f33,
+    60: #ff5450,
+    70: #ff8981,
+    80: #ffb3ad,
+    90: #ffdad7,
     95: #ffedeb,
     98: #fff8f7,
     99: #fffbff,
@@ -133,13 +133,8 @@ $_rest: (
   error: map.get($_palettes, error),
 );
 
-
 $primary-palette: map.merge(map.get($_palettes, primary), $_rest);
-$secondary-palette: map.get($_palettes, secondary);
 $tertiary-palette: map.merge(map.get($_palettes, tertiary), $_rest);
-$neutral-palette: map.get($_palettes, neutral);
-$neutral-variant-palette: map.get($_palettes, neutral-variant);
-$error-palette: map.get($_palettes, error);
 
 @function _high-contrast-value($light, $dark, $theme-type) {
   @if ($theme-type == light) {
@@ -166,14 +161,14 @@ $error-palette: map.get($_palettes, error);
     primary-fixed-dim: _high-contrast-value(#1c3353, #b1c7ef, $theme-type),
     on-primary-fixed: _high-contrast-value(#ffffff, #000000, $theme-type),
     on-primary-fixed-variant: _high-contrast-value(#ffffff, #001129, $theme-type),
-    secondary: _high-contrast-value(#003041, #dff3ff, $theme-type),
+    secondary: _high-contrast-value(#003046, #e3f2ff, $theme-type),
     on-secondary: _high-contrast-value(#ffffff, #000000, $theme-type),
-    secondary-container: _high-contrast-value(#264e5f, #a1c8dd, $theme-type),
-    on-secondary-container: _high-contrast-value(#ffffff, #000d14, $theme-type),
-    secondary-fixed: _high-contrast-value(#264e5f, #c0e8fe, $theme-type),
-    secondary-fixed-dim: _high-contrast-value(#093748, #a4cce1, $theme-type),
+    secondary-container: _high-contrast-value(#1b4e6a, #9ac8ea, $theme-type),
+    on-secondary-container: _high-contrast-value(#ffffff, #000d16, $theme-type),
+    secondary-fixed: _high-contrast-value(#1b4e6a, #c8e6ff, $theme-type),
+    secondary-fixed-dim: _high-contrast-value(#003650, #9eccee, $theme-type),
     on-secondary-fixed: _high-contrast-value(#ffffff, #000000, $theme-type),
-    on-secondary-fixed-variant: _high-contrast-value(#ffffff, #00131c, $theme-type),
+    on-secondary-fixed-variant: _high-contrast-value(#ffffff, #00131f, $theme-type),
     tertiary: _high-contrast-value(#2b2a2e, #f3eef4, $theme-type),
     on-tertiary: _high-contrast-value(#ffffff, #000000, $theme-type),
     tertiary-container: _high-contrast-value(#424044, #c5c1c7, $theme-type),
@@ -200,10 +195,10 @@ $error-palette: map.get($_palettes, error);
     inverse-on-surface: _high-contrast-value(#ffffff, #000000, $theme-type),
     outline: _high-contrast-value(#292c33, #eef0f8, $theme-type),
     outline-variant: _high-contrast-value(#464950, #c0c2cb, $theme-type),
-    error: _high-contrast-value(#60000d, #ffecea, $theme-type),
+    error: _high-contrast-value(#600008, #ffecea, $theme-type),
     on-error: _high-contrast-value(#ffffff, #000000, $theme-type),
-    error-container: _high-contrast-value(#97001a, #ffadaa, $theme-type),
-    on-error-container: _high-contrast-value(#ffffff, #220002, $theme-type),
+    error-container: _high-contrast-value(#970013, #ffaea7, $theme-type),
+    on-error-container: _high-contrast-value(#ffffff, #220001, $theme-type),
     surface-variant: _high-contrast-value(#e0e2eb, #44474e, $theme-type),
     on-surface-variant: _high-contrast-value(#000000, #ffffff, $theme-type),
   ))

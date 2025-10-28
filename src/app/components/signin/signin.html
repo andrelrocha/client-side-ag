@@ -33,12 +33,27 @@
         />
       </mat-form-field>
 
+      <ng-template #forgotPasswordBody let-dialogRef="dialogRef">
+        <form (ngSubmit)="onSubmitForgotPassword(dialogRef)" autocomplete="off">
+          <label style="display: block; font-size: 1.1rem; margin-bottom: 8px;">
+            Digite o e-mail da conta que você deseja alterar a sua senha
+          </label>
+          <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 2rem;">
+            <input matInput type="email" placeholder="E-mail" required [(ngModel)]="resetEmail" name="forgotEmail"/>
+          </mat-form-field>
+          <div class="modal-actions">
+            <button mat-stroked-button type="button" (click)="dialogRef.close()">Fechar</button>
+            <button mat-flat-button color="primary" type="submit">Salvar</button>
+          </div>
+        </form>
+      </ng-template>
+
       <div class="forgot-container">
-        <a class="forgot-link" href="#">Esqueceu sua senha?</a>
+        <a class="forgot-link" (click)="openForgotPasswordModal()">Esqueceu sua senha?</a>
       </div>
 
       <button
-        mat-raised-button
+        mat-flat-button
         color="primary"
         type="submit"
         [disabled]="isLoading"
@@ -62,5 +77,6 @@
       </mat-card>
     }
     -->
+
   </mat-card>
 </div>

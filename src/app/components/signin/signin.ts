@@ -12,6 +12,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ViewChild, TemplateRef } from '@angular/core';
+
+import { Modal } from '../index';
 
 @Component({
   selector: 'app-signin',
@@ -27,6 +31,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatProgressBarModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatDialogModule
 ],
   templateUrl: './signin.html',
   styleUrls: ['./signin.scss']
@@ -36,12 +41,43 @@ export class Signin {
   password = '';
   isLoading = false;
   errorMessage: string | null = null;
+  resetEmail = '';
+
+  @ViewChild('forgotPasswordBody') forgotPasswordBody!: TemplateRef<any>;
 
   constructor(
     private authService: Auth,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
+
+  openForgotPasswordModal() {
+    const dialogRef = this.dialog.open(Modal, {
+      data: {
+        title: 'Esqueceu a senha?',
+        body: this.forgotPasswordBody
+      },
+      width: '600px',
+      autoFocus: false
+    });
+  }
+
+  onSubmitForgotPassword(dialogRef: any) {
+    if (!this.resetEmail) { return; }
+    // Aqui, envie a solicitação de recuperação
+    // Exemplo de loading e mock de sucesso:
+    dialogRef.disableClose = true;
+    dialogRef.componentInstance.isLoading = true;
+
+    setTimeout(() => {
+      dialogRef.componentInstance.isLoading = false;
+      dialogRef.close();
+      this.snackBar.open('E-mail de recuperação enviado!', 'Fechar', {
+        duration: 4000, verticalPosition: 'top', panelClass: ['success-snackbar']
+      });
+    }, 2000);
+  }
 
   onSubmit(): void {
     this.errorMessage = null;

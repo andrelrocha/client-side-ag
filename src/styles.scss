@@ -1,115 +1,91 @@
-@use "@angular/material" as mat;
-@use "sass:map";
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use './themes/theme-colors' as themeColors;
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-// 1. Defina suas paletas de cores personalizadas primeiro, se necessário
-// Exemplo: $my-primary: mat.define-palette(mat.$azure-palette);
+// ========================================
+// 1. Defina o tema usando mat.define-theme()
+// ========================================
+$my-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: themeColors.$primary-palette,
+    tertiary: themeColors.$tertiary-palette,
+  ),
+  typography: (
+    plain-family: 'Poppins, Roboto, Arial, sans-serif',
+    brand-family: 'Poppins, sans-serif',
+    bold-weight: 600,
+    medium-weight: 500,
+    regular-weight: 400,
+  ),
+));
 
-// 2. Defina ou use paletas padrão fornecidas pelo Material
-$primary-palette: mat.$azure-palette;
-$accent-palette: mat.$magenta-palette;
-$warn-palette: mat.$red-palette;
+// ========================================
+// 2. Aplique o tema globalmente a todos os componentes usando mat.all-component-themes()
+// Isso gera automaticamente as CSS custom properties (--mat-sys-*)
+// ========================================
+:root {
+  @include mat.system-level-colors($my-theme);
+  @include mat.all-component-themes($my-theme);
+}
 
-// 4. Crie o tema principal para o HTML (escopo global)
 html {
-  @include mat.theme((
-    color: $primary-palette,
-    typography: (
-      plain-family: 'Poppins, Roboto, Arial, sans-serif',
-      brand-family: 'Poppins, sans-serif',
-      bold-weight: 600,
-      medium-weight: 500,
-      regular-weight: 400,
-    ),
-  ));
+  --mat-sys-secondary: #5096c8;
+  --mat-sys-on-secondary: #ffffff;
+  --mat-sys-secondary-container: #184b67;
 }
 
-// 5. Temas alternativos para classes específicas
-.accent {
-  @include mat.theme((
-    color: $accent-palette,
-  ));
-}
-
-.warn {
-  @include mat.theme((
-    color: $warn-palette,
-  ));
-}
-
-// 6. Estilização global complementar
 html,
 body {
   height: 100%;
-}
-body {
   margin: 0;
+  padding: 0;
   font-family: 'Poppins', sans-serif;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-primary);
 }
 
 h2,
 p {
   padding: 16px;
+  margin: 0;
 }
-
-.mr-8 {
-  margin-right: 8px;
-}
-
 
 .form-field {
   width: 100%;
   margin-bottom: 0.8rem;
-
-  .mat-form-field-outline {
-    border-radius: 1.5rem;
-  }
-
-  input.mat-input-element {
-    border-radius: 1.5rem;
-    background: #fff;
-    padding-left: 1.2rem;
-  }
 }
 
-.mat-raised-button,
-.mat-flat-button,
-.mat-stroked-button {
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-text-field-wrapper {
+  border-radius: 1.5rem;
+}
+
+.mdc-button,
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button {
   border-radius: 2rem;
   font-weight: 600;
   font-size: 1.05rem;
-  padding: 0.7rem 1rem;
-  margin-bottom: 0.5rem;
-  text-transform: none;
-  box-shadow: 0 2px 8px rgba(44, 52, 65, 0.08);
-
-  background: unset;
+  padding: 0.7rem 1.5rem;
+  width: 100%;
 }
-
-.mat-raised-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 0.5rem;
-}
-
-button {
-  width: 100% !important;
-  background-color: map.get($primary-palette, 40) !important;
-  color: #fff !important;
-
-  &:hover {
-    background-color: map.get($primary-palette, 60) !important;
-  }
-}
-
 
 a {
   text-decoration: none;
-  color: inherit;
+  cursor: pointer;
 }
 
 a:hover {
-  color: map.get($primary-palette, 40);
+  color: var(--mat-sys-secondary-fixed-dim);
+  text-decoration: underline;
+}
+
+.mr-8 {
+  margin-right: 8px;
 }
