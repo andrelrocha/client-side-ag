@@ -1,0 +1,2 @@
+ng generate @angular/material:theme-color
+https://github.com/angular/components/blob/main/src/material/schematics/ng-generate/theme-color/README.md

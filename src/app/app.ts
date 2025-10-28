@@ -6,7 +6,7 @@ import { LoadingBar } from './components/utils/loading-bar/loading-bar';
   selector: 'app-root',
   imports: [RouterOutlet, LoadingBar],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.scss'
 })
 export class App {
   protected readonly title = signal('angular-app');

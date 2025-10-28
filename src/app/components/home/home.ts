@@ -4,7 +4,7 @@ import { Auth } from '../../services/auth/auth.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.html',
-  styleUrls: ['./home.css'],
+  styleUrls: ['./home.scss'],
 })
 export class Home {
   userEmail: string | null = '';

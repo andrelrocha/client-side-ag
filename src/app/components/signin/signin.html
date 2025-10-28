@@ -1,46 +1,66 @@
-<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
-  <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
-    <h3 class="text-center mb-4">GeekCatalog Login</h3>
+@if (isLoading) {
+  <mat-progress-bar mode="indeterminate" color="primary" class="top-progress"></mat-progress-bar>
+}
+
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-title class="login-title">
+      Geek Catalog
+    </mat-card-title>
 
     <form (ngSubmit)="onSubmit()">
-      <div class="mb-3">
-        <label for="login" class="form-label">Email</label>
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Email</mat-label>
         <input
+          matInput
           type="email"
-          id="login"
-          class="form-control"
+          placeholder="Digite seu e-mail"
           [(ngModel)]="login"
           name="login"
           required
         />
-      </div>
+      </mat-form-field>
 
-      <div class="mb-3">
-        <label for="password" class="form-label">Senha</label>
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Senha</mat-label>
         <input
+          matInput
           type="password"
-          id="password"
-          class="form-control"
+          placeholder="Digite sua senha"
           [(ngModel)]="password"
           name="password"
           required
         />
+      </mat-form-field>
+
+      <div class="forgot-container">
+        <a class="forgot-link" href="#">Esqueceu sua senha?</a>
       </div>
 
-      <button class="btn btn-primary w-100" type="submit" [disabled]="isLoading">
-        @if (!isLoading) {
-          Entrar
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="isLoading"
+      >
+        @if (isLoading) {
+          Carregando...
         } @else {
-          <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-          Entrando...
+          Acessar
         }
       </button>
-
-      @if (errorMessage) {
-        <div class="alert alert-danger mt-3">
-          {{ errorMessage }}
-        </div>
-      }
     </form>
-  </div>
+
+    <!--
+    @if (errorMessage) {
+      <mat-card class="error-card mt-3">
+        <mat-card-content>
+          <p class="error-text">
+            <mat-icon class="me-2">error</mat-icon>{{ errorMessage }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    }
+    -->
+  </mat-card>
 </div>

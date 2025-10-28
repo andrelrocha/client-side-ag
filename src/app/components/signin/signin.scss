@@ -1,0 +1,38 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--color-bg);
+}
+
+.login-card {
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background: #f7f7f915;
+  border-radius: 1.5rem;
+  box-shadow: 0 6px 32px rgba(44, 52, 65, 0.10);
+}
+
+
+.login-title {
+  text-align: center;
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.forgot-container {
+  text-align: right;
+  margin-bottom: 1rem;
+}
+
+.button-spinner {
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
