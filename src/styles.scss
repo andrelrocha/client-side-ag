@@ -45,27 +45,11 @@ p {
   margin: 0;
 }
 
-.form-field {
-  width: 100%;
-  color: var(--mat-sys-primary);
-}
-
 .mat-mdc-form-field {
   width: 100%;
 }
 
-.mat-mdc-text-field-wrapper {
-  border-radius: 1.5rem;
-}
-
-.mdc-button,
-.mat-mdc-button,
-.mat-mdc-raised-button,
-.mat-mdc-outlined-button {
-  border-radius: 2rem;
-  font-weight: 600;
-  font-size: 1.05rem;
-  padding: 0.7rem 1.5rem;
+.mdc-button {
   width: 100%;
 }
 
@@ -81,4 +65,15 @@ a:hover {
 
 .mr-8 {
   margin-right: 8px;
+}
+
+.error-snackbar {
+  background: var(--mat-sys-error-container) !important;
+  color: var(--mat-sys-on-error-container) !important;
+  font-weight: 500;
+}
+.success-snackbar {
+  background: var(--mat-sys-primary) !important;
+  color: var(--mat-sys-on-primary) !important;
+  font-weight: 500;
 }

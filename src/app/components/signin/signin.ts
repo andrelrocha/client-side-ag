@@ -80,9 +80,31 @@ export class Signin {
     }, 2000);
   }
 
+  validateFields(): string | null {
+    const errors: string[] = [];
+    if (!this.login || this.login.trim().length === 0) {
+      errors.push("Campo 'Email ou Login' é obrigatório.");
+    }
+    if (!this.password || this.password.trim().length === 0) {
+      errors.push("Campo 'Senha' é obrigatório.");
+    }
+
+    if (errors.length) {
+      return errors.join('\n');
+    }
+    return null;
+  }
+
   onSubmit(): void {
     this.errorMessage = null;
     this.isLoading = true;
+
+    const validationError = this.validateFields();
+
+    if (validationError) {
+      this.showError(validationError);
+      return;
+    }
 
     this.authService.login(this.login, this.password).subscribe({
       next: (response) => {
