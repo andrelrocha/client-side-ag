@@ -1,27 +1,29 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, CanActivateChild, Router } from '@angular/router';
 import { Auth } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RoleGuard implements CanActivate {
+export class RoleGuard implements CanActivate, CanActivateChild {
 
   constructor(private auth: Auth, private router: Router) {}
 
   canActivate(): boolean {
+    return this._validateRole();
+  }
+
+  canActivateChild(): boolean {
+    return this._validateRole();
+  }
+
+  private _validateRole(): boolean {
     const payload = this.auth.getTokenPayload();
 
-    if (!payload) {
+    if (!payload || !payload.roles.includes('USER')) {
       this.router.navigate(['/']);
       return false;
     }
-
-    if (payload.roles.includes('USER')) {
-      return true;
-    }
-
-    this.router.navigate(['/']);
-    return false;
+    return true;
   }
 }

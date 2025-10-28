@@ -4,5 +4,11 @@ import { RoleGuard } from './services/auth/role.guard.service';
 
 export const routes: Routes = [
   { path: '', component: Signin },
-  { path: 'home', component: Home, canActivate: [RoleGuard] }
+  {
+    path: 'logged',
+    canActivateChild: [RoleGuard],
+    children: [
+      { path: 'home', component: Home }
+    ]
+  }
 ];

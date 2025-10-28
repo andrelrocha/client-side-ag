@@ -53,6 +53,8 @@ p {
   width: 100%;
 }
 
+
+
 a {
   text-decoration: none;
   cursor: pointer;
@@ -68,12 +70,28 @@ a:hover {
 }
 
 .error-snackbar {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.error-snackbar .mdc-snackbar__surface {
   background: var(--mat-sys-error-container) !important;
   color: var(--mat-sys-on-error-container) !important;
-  font-weight: 500;
+  border-radius: 1.2rem !important;
+  box-shadow: 0 6px 32px var(--mat-sys-shadow, rgba(44, 52, 65, 0.10)) !important;
 }
-.success-snackbar {
+
+.success-snackbar .mdc-snackbar__surface {
   background: var(--mat-sys-primary) !important;
   color: var(--mat-sys-on-primary) !important;
-  font-weight: 500;
+  border-radius: 1.2rem !important;
+  box-shadow: 0 6px 32px var(--mat-sys-shadow, rgba(44, 52, 65, 0.10)) !important;
+}
+
+.mat-mdc-snack-bar-container {
+    &.success-snackbar {
+      --mdc-snackbar-container-color: #2196f3;
+      --mat-mdc-snack-bar-button-color: #fff;
+      --mdc-snackbar-supporting-text-color: #fff;
+    }
 }

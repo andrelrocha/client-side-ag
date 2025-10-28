@@ -16,6 +16,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ViewChild, TemplateRef } from '@angular/core';
 
 import { Modal } from '../index';
+import { ERROR_MAP } from '../../utils/error-map';
 
 @Component({
   selector: 'app-signin',
@@ -65,7 +66,12 @@ export class Signin {
     });
   }
   onSubmitForgotPassword(dialogRef: any) {
-    if (!this.resetEmail) { return; }
+    const validationError = this.validateForgotPasswordEmail();
+    if (validationError) {
+      this.showError(validationError);
+      return;
+    }
+
     // Aqui, envie a solicitação de recuperação
     // Exemplo de loading e mock de sucesso:
     dialogRef.disableClose = true;
@@ -80,7 +86,14 @@ export class Signin {
     }, 2000);
   }
 
-  validateFields(): string | null {
+  validateForgotPasswordEmail(): string | null {
+    if (!this.resetEmail || this.resetEmail.trim().length === 0) {
+      return "Campo 'Email' é obrigatório para o envio do email de recuperação de senha.";
+    }
+    return null;
+  }
+
+  validateSignInFields(): string | null {
     const errors: string[] = [];
     if (!this.login || this.login.trim().length === 0) {
       errors.push("Campo 'Email ou Login' é obrigatório.");
@@ -99,7 +112,7 @@ export class Signin {
     this.errorMessage = null;
     this.isLoading = true;
 
-    const validationError = this.validateFields();
+    const validationError = this.validateSignInFields();
 
     if (validationError) {
       this.showError(validationError);
@@ -111,15 +124,22 @@ export class Signin {
         const token = response?.data?.token;
         if (token) {
           this.authService.setToken(token);
-          this.router.navigate(['/home']);
+          this.showSuccess('Login realizado com sucesso!');
+          this.router.navigate(['/logged/home']);
         } else {
           this.showError('Resposta inesperada do servidor.');
         }
       },
       error: (err) => {
         const backendError = err?.error?.error;
-        if (backendError?.name && backendError?.message) {
-          this.showError(`${backendError.name}: ${backendError.message}`);
+        let errorKey = backendError?.name;
+        let errorMessage = backendError?.message;
+        if (errorKey && errorMessage) {
+          const errorObj = ERROR_MAP[errorKey];
+          if (errorObj && errorObj.message) {
+            this.showError(`${errorObj.key}: ${errorObj.message}`);
+            return;
+          }
         } else {
           this.showError('Falha na autenticação. Tente novamente.');
         }
@@ -134,10 +154,19 @@ export class Signin {
     this.errorMessage = message;
     this.isLoading = false;
     this.snackBar.open(message, 'Fechar', {
-      duration: 4000,
+      duration: 6000,
       horizontalPosition: 'center',
       verticalPosition: 'top',
       panelClass: ['error-snackbar']
+    });
+  }
+
+  private showSuccess(message: string): void {
+    this.snackBar.open(message, 'Fechar', {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar']
     });
   }
 }
