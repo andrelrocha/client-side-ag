@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Auth } from '../../services/auth/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +9,7 @@ import { Auth } from '../../services/auth/auth.service';
 export class Home {
   userEmail: string | null = '';
 
-  constructor(private auth: Auth) {}
+  constructor(private auth: AuthService) {}
 
   ngOnInit() {
     this.userEmail = this.auth.getTokenPayload()?.sub || 'Email não encontrado';

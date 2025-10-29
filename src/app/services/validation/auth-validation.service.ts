@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
+import { SignInRequestDTO } from '../../dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthValidationService {
-  public validateSignInFields(login: string, password: string): string | null {
+  public validateSignInFields(data: SignInRequestDTO): string | null {
     const errors: string[] = [];
-    if (!login?.trim()) errors.push("Campo 'Email ou Login' é obrigatório.");
-    if (!password?.trim()) errors.push("Campo 'Senha' é obrigatório.");
+    if (!data.login?.trim()) errors.push("Campo 'Email ou Login' é obrigatório.");
+    if (!data.password?.trim()) errors.push("Campo 'Senha' é obrigatório.");
     return errors.length ? errors.join('\n') : null;
   }
 

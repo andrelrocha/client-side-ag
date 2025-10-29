@@ -35,8 +35,10 @@ import { ForgotPasswordRequestDTO, SignInRequestDTO } from '../../dto';
   styleUrls: ['./signin.scss']
 })
 export class Signin {
-  login: string = '';
-  password: string = '';
+  model: SignInRequestDTO = {
+    login: '',
+    password: ''
+  };
   resetEmail: string = '';
   isLoading: boolean = false;
   errorMessage: string | null = null;
@@ -60,8 +62,12 @@ export class Signin {
     });
   }
 
+  goToSignUp(): void {
+    this.navigation.goSignup();
+  }
+
   onSubmit(): void {
-    const error = this.authValidation.validateSignInFields(this.login, this.password);
+    const error = this.authValidation.validateSignInFields(this.model);
     if (error) {
       this.errorMessage = error;
       return this.notify.error(error);
@@ -69,12 +75,7 @@ export class Signin {
 
     this.isLoading = true;
 
-    const data: SignInRequestDTO = {
-      login: this.login,
-      password: this.password
-    };
-
-    this.auth.login(data)
+    this.auth.login(this.model)
       .subscribe({
         next: (response) => {
           const token = response.data?.token;

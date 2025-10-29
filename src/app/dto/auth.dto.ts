@@ -3,6 +3,10 @@ export interface SignInRequestDTO {
   password: string;
 }
 
+export interface SignInResponseDTO {
+  token: string;
+}
+
 export interface ForgotPasswordRequestDTO {
   email: string;
 }

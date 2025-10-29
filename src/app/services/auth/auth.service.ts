@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
 import { environment } from '../../../environments/environment';
-import { SignInRequestDTO, ForgotPasswordRequestDTO, ApiResponseDTO } from '../../dto';
+import { SignInRequestDTO, SignInResponseDTO, ForgotPasswordRequestDTO, ApiResponseDTO, MessageResponseDTO } from '../../dto';
 
 
 interface TokenPayload {
@@ -24,16 +24,12 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(data: SignInRequestDTO): Observable<ApiResponseDTO<{
-    token: string
-  }>> {
-    return this.http.post<ApiResponseDTO<{ token: string }>>(`${this.apiUrl}/auth/signin`, data);
+  login(data: SignInRequestDTO): Observable<ApiResponseDTO<SignInResponseDTO>> {
+    return this.http.post<ApiResponseDTO<SignInResponseDTO>>(`${this.apiUrl}/auth/signin`, data);
   }
 
-  forgotPassword(data: ForgotPasswordRequestDTO): Observable<ApiResponseDTO<{
-    message: string
-  }>> {
-    return this.http.post<ApiResponseDTO<{ message: string }>>(`${this.apiUrl}/auth/password/forgot`, data);
+  forgotPassword(data: ForgotPasswordRequestDTO): Observable<ApiResponseDTO<MessageResponseDTO>> {
+    return this.http.post<ApiResponseDTO<MessageResponseDTO>>(`${this.apiUrl}/auth/password/forgot`, data);
   }
 
   setToken(token: string): void {

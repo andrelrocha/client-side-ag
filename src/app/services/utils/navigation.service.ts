@@ -15,6 +15,10 @@ export class NavigationService {
     this.router.navigate(['/login']);
   }
 
+  goSignup(): void {
+    this.router.navigate(['/signup']);
+  }
+
   goTo(path: string[]): void {
     this.router.navigate(path);
   }

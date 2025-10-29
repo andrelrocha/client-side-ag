@@ -11,7 +11,7 @@
           matInput
           type="email"
           placeholder="Digite seu e-mail"
-          [(ngModel)]="login"s
+          [(ngModel)]="model.login"
           name="login"
           required
         />
@@ -23,7 +23,7 @@
           matInput
           type="password"
           placeholder="Digite sua senha"
-          [(ngModel)]="password"
+          [(ngModel)]="model.password"
           name="password"
           required
         />
@@ -31,6 +31,10 @@
 
       <div class="forgot-container">
         <a class="forgot-link" (click)="openForgotPasswordModal()">Esqueceu sua senha?</a>
+      </div>
+
+      <div class="sign-up-container">
+        Não tem uma conta? <a (click)="goToSignUp()">Cadastre-se</a>
       </div>
 
       <button
