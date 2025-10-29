@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../../environments/environment';
 
 interface TokenPayload {
   sub: string;
-  roles: Array<String>;
+  roles: Array<string>;
   iss: string;
   id: string;
   exp: number;
@@ -16,7 +17,7 @@ interface TokenPayload {
   providedIn: 'root'
 })
 export class Auth {
-  private apiUrl = 'http://localhost:8090';
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

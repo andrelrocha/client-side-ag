@@ -65,6 +65,7 @@ export class Signin {
       autoFocus: false
     });
   }
+
   onSubmitForgotPassword(dialogRef: any) {
     const validationError = this.validateForgotPasswordEmail();
     if (validationError) {
