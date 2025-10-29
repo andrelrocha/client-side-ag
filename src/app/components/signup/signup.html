@@ -51,6 +51,23 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Telefone</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="(99) 99999-9999"
+          formControlName="phone"
+          mask="(00) 00009-0000"
+        />
+        @if (phone?.hasError('required') && phone?.touched) {
+          <mat-error>O telefone é obrigatório.</mat-error>
+        }
+        @if (phone?.hasError('pattern') && phone?.touched) {
+          <mat-error>Digite um telefone válido.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>Senha</mat-label>
         <input
           matInput
@@ -65,6 +82,16 @@
           <mat-error>Mínimo de 8 caracteres.</mat-error>
         }
       </mat-form-field>
+
+      <div class="form-toggles">
+        <div class="toggle-option">
+          <mat-slide-toggle formControlName="refreshTokenEnabled"/> Manter-me conectado
+        </div>
+
+        <div class="toggle-option">
+          <mat-slide-toggle formControlName="twoFactorEnabled"/> 2FA (Autenticação em Duas Etapas)
+        </div>
+      </div>
 
       <div class="form-buttons">
         <button mat-flat-button color="primary" type="submit" [disabled]="isLoading">

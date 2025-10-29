@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+
 
 import { CreateUserService } from '../../services/users/create-user.service';
 import { CreateUserRequestDTO } from '../../dto';
@@ -24,8 +26,13 @@ import { NavigationService } from '../../services/utils/navigation.service';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
+    MatSlideToggleModule,
+    NgxMaskDirective,
     ReactiveFormsModule
-],
+  ],
+  providers: [provideNgxMask({
+      dropSpecialCharacters: false
+  })],
   templateUrl: './signup.html',
   styleUrls: ['./signup.scss']
 })
@@ -44,6 +51,11 @@ export class Signup {
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       name: new FormControl('', [Validators.required]),
       username: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      phone: new FormControl('', [
+        Validators.required
+      ]),
+      twoFactorEnabled: new FormControl(false),
+      refreshTokenEnabled: new FormControl(false)
     });
   }
 
@@ -51,6 +63,7 @@ export class Signup {
   get username() { return this.signUpForm.get('username'); }
   get email() { return this.signUpForm.get('email'); }
   get password() { return this.signUpForm.get('password'); }
+  get phone() { return this.signUpForm.get('phone'); }
 
   goLogin() {
     this.navigation.goLogin();
@@ -67,15 +80,16 @@ export class Signup {
 
     const simulatedData: CreateUserRequestDTO = {
       ...this.signUpForm.value,
-      phone: '(11)91234-5678',
+      phone: this.signUpForm.value.phone.replace(' ', ''),
       birthday: '1990-01-01',
       countryId: 'b8d9c92a-7a0b-4d2f-91cd-582f8c3478e4',
-      twoFactorEnabled: false,
-      refreshTokenEnabled: true,
       theme: 'LIGHT',
       rolesName: ['USER'],
     };
 
+    console.log('Simulated signup data:', simulatedData);
+
+    /*
     this.users.createUser(simulatedData)
       .subscribe({
         next: () => {
@@ -93,5 +107,6 @@ export class Signup {
         },
         complete: () => this.isLoading = false
       });
+    */
   }
 }
