@@ -76,12 +76,17 @@ export class Signin {
       const loginControl = this.form.get('login');
       const passwordControl = this.form.get('password');
 
+      let errorMessage = '';
       if (loginControl?.hasError('required')) {
-        return this.notify.error("Campo 'Email ou Username' é obrigatório.");
+        errorMessage = "Campo 'Email ou Username' é obrigatório.";
+        this.errorMessage = errorMessage;
+        return this.notify.error(errorMessage);
       }
 
       if (passwordControl?.hasError('required')) {
-        return this.notify.error("Campo 'Senha' é obrigatório.");
+        errorMessage = "Campo 'Senha' é obrigatório.";
+        this.errorMessage = errorMessage;
+        return this.notify.error(errorMessage);
       }
     }
 

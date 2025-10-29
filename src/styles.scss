@@ -53,6 +53,10 @@ p {
   width: 100%;
 }
 
+form {
+  width: 100%;
+}
+
 a {
   text-decoration: none;
   cursor: pointer;
@@ -77,4 +81,29 @@ a:hover {
   background: var(--mat-sys-primary) !important;
   color: var(--mat-sys-on-primary) !important;
   border-radius: 1.2rem !important;
+}
+
+.form-card {
+  width: 560px;
+  align-items: center;
+  padding: 3rem;
+  border-radius: 1.5rem !important;
+}
+
+.error-card {
+  background: var(--mat-sys-error-container) !important;
+  color: var(--mat-sys-on-error-container);
+  border-radius: 1rem;
+  margin: 1rem 0;
+}
+
+.error-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.error-message {
+  width: 90%;
 }

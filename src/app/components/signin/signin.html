@@ -1,5 +1,5 @@
 <div class="login-container">
-  <mat-card class="login-card">
+  <mat-card class="form-card">
     <mat-card-title class="login-title">
       Geek Catalog
     </mat-card-title>
@@ -46,19 +46,18 @@
           Acessar
         }
       </button>
+
+      @if (errorMessage) {
+        <mat-card class="error-card">
+          <mat-card-content>
+            <div class="error-content">
+              <mat-icon color="warn">error</mat-icon>
+              <span class="error-message">{{ errorMessage }}</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
     </form>
-
-    @if (errorMessage) {
-      <mat-card class="error-card">
-        <mat-card-content>
-          <div class="error-content">
-            <mat-icon color="warn">error</mat-icon>
-            <span class="error-message">{{ errorMessage }}</span>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    }
-
   </mat-card>
 </div>
 

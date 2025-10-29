@@ -5,18 +5,7 @@
   min-height: 100vh;
 }
 
-.signup-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2.5rem;
-  background: var(--mat-sys-surface-container-high);
-  border-radius: 1.5rem;
-  box-shadow: 0 6px 32px rgba(44, 52, 65, 0.09);
-}
-
 .signup-title {
-  font-size: 2rem;
   font-weight: 600;
   margin-bottom: 1.6rem;
 }

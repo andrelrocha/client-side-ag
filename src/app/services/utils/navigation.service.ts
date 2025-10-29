@@ -12,7 +12,7 @@ export class NavigationService {
   }
 
   goLogin(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   goSignup(): void {
