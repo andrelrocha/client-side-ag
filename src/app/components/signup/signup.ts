@@ -7,6 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 
@@ -27,6 +29,8 @@ import { NavigationService } from '../../services/utils/navigation.service';
     MatButtonModule,
     MatCardModule,
     MatSlideToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     NgxMaskDirective,
     ReactiveFormsModule
   ],
@@ -51,9 +55,8 @@ export class Signup {
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       name: new FormControl('', [Validators.required]),
       username: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      phone: new FormControl('', [
-        Validators.required
-      ]),
+      phone: new FormControl('', [Validators.required]),
+      birthday: new FormControl('', [Validators.required]),
       twoFactorEnabled: new FormControl(false),
       refreshTokenEnabled: new FormControl(false)
     });
@@ -64,6 +67,7 @@ export class Signup {
   get email() { return this.signUpForm.get('email'); }
   get password() { return this.signUpForm.get('password'); }
   get phone() { return this.signUpForm.get('phone'); }
+  get birthday() { return this.signUpForm.get('birthday'); }
 
   goLogin() {
     this.navigation.goLogin();
@@ -78,10 +82,15 @@ export class Signup {
     this.isLoading = true;
     this.errorMessage = null;
 
+    const { birthday, phone, ...rest } = this.signUpForm.value;
+
+    //formato yyyy-mm-dd
+    const formattedBirthday = new Date(birthday).toISOString().split('T')[0];
+
     const simulatedData: CreateUserRequestDTO = {
-      ...this.signUpForm.value,
-      phone: this.signUpForm.value.phone.replace(' ', ''),
-      birthday: '1990-01-01',
+      ...rest,
+      phone: phone.replace(' ', ''),
+      birthday: formattedBirthday,
       countryId: 'b8d9c92a-7a0b-4d2f-91cd-582f8c3478e4',
       theme: 'LIGHT',
       rolesName: ['USER'],

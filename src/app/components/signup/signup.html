@@ -68,6 +68,23 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Data de Nascimento</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          placeholder="Selecione sua data de nascimento"
+          formControlName="birthday"
+          (click)="picker.open()"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+
+        @if (birthday?.hasError('required')) {
+          <mat-error>A data de nascimento é obrigatória.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>Senha</mat-label>
         <input
           matInput
