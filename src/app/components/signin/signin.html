@@ -1,18 +1,19 @@
 <div class="login-container">
   <mat-card class="form-card">
-    <mat-card-title class="login-title">
-      Geek Catalog
-    </mat-card-title>
+    <mat-card-title class="login-title">Geek Catalog</mat-card-title>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
       <mat-form-field appearance="outline" class="form-field">
         <mat-label>Email ou Username</mat-label>
         <input
           matInput
           placeholder="Digite seu e-mail ou username"
           formControlName="login"
-          required
         />
+        @if (login?.hasError('required') && login?.touched) {
+          <mat-error>Campo obrigatório.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="form-field">
@@ -22,8 +23,10 @@
           type="password"
           placeholder="Digite sua senha"
           formControlName="password"
-          required
         />
+        @if (password?.hasError('required') && password?.touched) {
+          <mat-error>Campo obrigatório.</mat-error>
+        }
       </mat-form-field>
 
       <div class="forgot-container">
@@ -34,17 +37,8 @@
         Não tem uma conta? <a (click)="goToSignUp()">Cadastre-se</a>
       </div>
 
-      <button
-        mat-flat-button
-        color="primary"
-        type="submit"
-        [disabled]="isLoading"
-      >
-        @if (isLoading) {
-          Carregando...
-        } @else {
-          Acessar
-        }
+      <button mat-flat-button color="primary" type="submit" [disabled]="isLoading">
+        @if (isLoading) { Carregando... } @else { Acessar }
       </button>
 
       @if (errorMessage) {
@@ -61,19 +55,30 @@
   </mat-card>
 </div>
 
-<!-- modal esqueci a senha -->
+<!-- Modal "Esqueceu a senha" -->
 <ng-template #forgotPasswordBody let-dialogRef="dialogRef">
-  <form [formGroup]="forgotPasswordForm" (ngSubmit)="onSubmitForgotPassword(dialogRef)" autocomplete="off" class="forgot-email-input">
+  <form
+    [formGroup]="forgotPasswordForm"
+    (ngSubmit)="onSubmitForgotPassword(dialogRef)"
+    autocomplete="off"
+    class="forgot-email-input"
+  >
     Digite o e-mail da conta que você deseja alterar a sua senha:
     <mat-form-field appearance="outline">
-      <input matInput type="email" placeholder="E-mail" required formControlName="email"/>
+      <input matInput type="email" placeholder="E-mail" formControlName="email" />
+      @if (forgotEmail?.hasError('required') && forgotEmail?.touched) {
+        <mat-error>Campo obrigatório.</mat-error>
+      }
+      @if (forgotEmail?.hasError('email') && forgotEmail?.touched) {
+        <mat-error>Digite um e-mail válido.</mat-error>
+      }
     </mat-form-field>
   </form>
 </ng-template>
 
 <ng-template #forgotPasswordActions let-dialogRef="dialogRef">
   <div class="button-group">
-      <button mat-stroked-button type="button" (click)="dialogRef.close()">Fechar</button>
-      <button mat-flat-button color="primary" (click)="onSubmitForgotPassword(dialogRef)">Enviar</button>
+    <button mat-stroked-button type="button" (click)="dialogRef.close()">Fechar</button>
+    <button mat-flat-button color="primary" (click)="onSubmitForgotPassword(dialogRef)">Enviar</button>
   </div>
 </ng-template>

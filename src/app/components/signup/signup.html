@@ -4,40 +4,88 @@
       Novo por aqui? Cadastre-se!
     </mat-card-title>
 
-    <form (ngSubmit)="onSubmit()">
-
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline" class="form-field">
         <mat-label>Nome</mat-label>
         <input
           matInput
           type="text"
           placeholder="Digite seu nome"
-          required
-          [(ngModel)]="model.name"
-          name="name"
+          formControlName="name"
         />
+        @if (name?.invalid && name?.touched) {
+          <mat-error>O nome é obrigatório.</mat-error>
+        }
       </mat-form-field>
 
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Usuário</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Digite seu nome de usuário"
+          formControlName="username"
+        />
+        @if (username?.hasError('required') && username?.touched) {
+          <mat-error>O nome de usuário é obrigatório.</mat-error>
+        }
+        @if (username?.hasError('maxlength') && username?.touched) {
+          <mat-error>Máximo de 20 caracteres.</mat-error>
+        }
+      </mat-form-field>
 
-      <button mat-flat-button color="primary" type="submit" [disabled]="isLoading">
-        @if (isLoading) { Carregando... } @else { Cadastrar }
-      </button>
-      <div style="margin-top: 1rem; text-align: right;">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          placeholder="Digite seu email"
+          formControlName="email"
+        />
+        @if (email?.hasError('required') && email?.touched) {
+          <mat-error>O email é obrigatório.</mat-error>
+        }
+        @if (email?.hasError('email') && email?.touched) {
+          <mat-error>Digite um email válido.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          type="password"
+          placeholder="Digite sua senha"
+          formControlName="password"
+        />
+        @if (password?.hasError('required') && password?.touched) {
+          <mat-error>A senha é obrigatória.</mat-error>
+        }
+        @if (password?.hasError('minlength') && password?.touched) {
+          <mat-error>Mínimo de 8 caracteres.</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="form-buttons">
+        <button mat-flat-button color="primary" type="submit" [disabled]="isLoading">
+          @if (isLoading) { Carregando... } @else { Cadastrar }
+        </button>
+
         <button mat-button color="primary" type="button" (click)="goLogin()">
           Já possui conta? Fazer login
         </button>
       </div>
-    </form>
 
-    @if (errorMessage) {
-      <mat-card class="error-card">
-        <mat-card-content>
-          <div class="error-content">
-            <mat-icon color="warn">error</mat-icon>
-            <span class="error-message">{{ errorMessage }}</span>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    }
+      @if (errorMessage) {
+        <mat-card class="error-card">
+          <mat-card-content>
+            <div class="error-content">
+              <mat-icon color="warn">error</mat-icon>
+              <span class="error-message">{{ errorMessage }}</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </form>
   </mat-card>
 </div>

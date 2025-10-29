@@ -9,3 +9,10 @@
   font-weight: 600;
   margin-bottom: 1.6rem;
 }
+
+.form-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.6rem;
+}

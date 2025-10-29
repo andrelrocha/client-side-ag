@@ -1,6 +1,6 @@
 export interface ErrorTranslation {
   key: string;
-  message: string;
+  message: string | null;
 }
 
 export const ERROR_MAP: Record<string, ErrorTranslation> = {
@@ -10,7 +10,7 @@ export const ERROR_MAP: Record<string, ErrorTranslation> = {
   },
   MethodArgumentNotValidException: {
     key: 'Dados Inválidos',
-    message: 'Algum campo obrigatório não foi informado ou está incorreto.'
+    message: null,
   },
   AccessDeniedException: {
     key: 'Acesso Negado',
@@ -22,7 +22,7 @@ export const ERROR_MAP: Record<string, ErrorTranslation> = {
   },
   ValidationException: {
     key: 'Erro de Validação',
-    message: 'Existem campos com erro ou dados inválidos.'
+    message: null,
   },
   EntityNotFoundException: {
     key: 'Registro Não Encontrado',

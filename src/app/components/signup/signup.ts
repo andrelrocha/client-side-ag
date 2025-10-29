@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -19,31 +19,18 @@ import { NavigationService } from '../../services/utils/navigation.service';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-  ],
+    ReactiveFormsModule
+],
   templateUrl: './signup.html',
   styleUrls: ['./signup.scss']
 })
 export class Signup {
-  model: CreateUserRequestDTO = {
-    email: '',
-    password: '',
-    name: '',
-    username: '',
-    phone: '',
-    birthday: '',
-    countryId: '',
-    twoFactorEnabled: false,
-    refreshTokenEnabled: false,
-    theme: 'LIGHT',
-    rolesName: ['user'],
-  };
-  rolesInput: string = '';
+  signUpForm: FormGroup;
   isLoading: boolean = false;
   errorMessage: string | null = null;
 
@@ -51,45 +38,57 @@ export class Signup {
     private users: CreateUserService,
     private notify: NotificationService,
     private navigation: NavigationService
-  ) {}
-
-  onBirthdayChange(date: Date) {
-    if (date) {
-      // Define em yyyy-MM-dd
-      const yyyy = date.getFullYear();
-      const mm = (date.getMonth() + 1).toString().padStart(2, '0');
-      const dd = date.getDate().toString().padStart(2, '0');
-      this.model.birthday = `${yyyy}-${mm}-${dd}`;
-    }
+  ) {
+    this.signUpForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      name: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+    });
   }
 
-  updateRoles() {
-    if (this.rolesInput) {
-      this.model.rolesName = this.rolesInput.split(',').map(r => r.trim()).filter(Boolean);
-    } else {
-      this.model.rolesName = [];
-    }
-  }
+  get name() { return this.signUpForm.get('name'); }
+  get username() { return this.signUpForm.get('username'); }
+  get email() { return this.signUpForm.get('email'); }
+  get password() { return this.signUpForm.get('password'); }
 
   goLogin() {
     this.navigation.goLogin();
   }
 
   onSubmit(): void {
-    // Aqui você pode adicionar validações de campos se precisar!
+    if (this.signUpForm.invalid) {
+      this.signUpForm.markAllAsTouched();
+      return this.notify.error('Por favor, corrija os erros no cadastro.');
+    }
+
     this.isLoading = true;
     this.errorMessage = null;
-    this.users.createUser(this.model)
+
+    const simulatedData: CreateUserRequestDTO = {
+      ...this.signUpForm.value,
+      phone: '(11)91234-5678',
+      birthday: '1990-01-01',
+      countryId: 'b8d9c92a-7a0b-4d2f-91cd-582f8c3478e4',
+      twoFactorEnabled: false,
+      refreshTokenEnabled: true,
+      theme: 'LIGHT',
+      rolesName: ['USER'],
+    };
+
+    this.users.createUser(simulatedData)
       .subscribe({
         next: () => {
+          this.isLoading = false;
           this.notify.success('Cadastro realizado com sucesso!');
+          this.goLogin();
         },
         error: (err) => {
           const backendError = err?.error?.error;
           const errorKey = backendError?.name;
           const errorObj = ERROR_MAP[errorKey];
           this.notify.error(errorObj?.message || 'Erro ao criar usuário.');
-          this.errorMessage = `${errorObj?.key}: ${errorObj?.message}` || null;
+          this.errorMessage = `${errorObj?.key}: ` + (errorObj?.message == null ? backendError?.message : errorObj?.message);
           this.isLoading = false;
         },
         complete: () => this.isLoading = false
