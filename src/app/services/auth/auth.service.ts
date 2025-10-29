@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+
 import { environment } from '../../../environments/environment';
+import { SignInRequestDTO, ForgotPasswordRequestDTO, ApiResponseDTO } from '../../dto';
+
 
 interface TokenPayload {
   sub: string;
@@ -16,17 +19,21 @@ interface TokenPayload {
 @Injectable({
   providedIn: 'root'
 })
-export class Auth {
+export class AuthService {
   private readonly apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
-  login(login: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/signin`, { login, password });
+  login(data: SignInRequestDTO): Observable<ApiResponseDTO<{
+    token: string
+  }>> {
+    return this.http.post<ApiResponseDTO<{ token: string }>>(`${this.apiUrl}/auth/signin`, data);
   }
 
-  forgotPassword(email: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/password/forgot`, { email });
+  forgotPassword(data: ForgotPasswordRequestDTO): Observable<ApiResponseDTO<{
+    message: string
+  }>> {
+    return this.http.post<ApiResponseDTO<{ message: string }>>(`${this.apiUrl}/auth/password/forgot`, data);
   }
 
   setToken(token: string): void {

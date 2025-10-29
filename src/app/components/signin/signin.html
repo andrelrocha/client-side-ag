@@ -1,7 +1,3 @@
-@if (isLoading) {
-  <mat-progress-bar mode="indeterminate" color="primary" class="top-progress"></mat-progress-bar>
-}
-
 <div class="login-container">
   <mat-card class="login-card">
     <mat-card-title class="login-title">
@@ -51,25 +47,6 @@
       </button>
     </form>
 
-
-    <!-- Forgot Password Modal -->
-    <ng-template #forgotPasswordBody let-dialogRef="dialogRef">
-      <form (ngSubmit)="onSubmitForgotPassword(dialogRef)" autocomplete="off" class="forgot-email-input">
-        Digite o e-mail da conta que você deseja alterar a sua senha:
-        <mat-form-field appearance="outline">
-          <input matInput type="email" placeholder="E-mail" required [(ngModel)]="resetEmail" name="forgotEmail"/>
-        </mat-form-field>
-      </form>
-    </ng-template>
-
-    <ng-template #forgotPasswordActions let-dialogRef="dialogRef">
-      <div class="button-group">
-          <button mat-stroked-button type="button" (click)="dialogRef.close()">Fechar</button>
-          <button mat-flat-button color="primary" (click)="onSubmitForgotPassword(dialogRef)">Enviar</button>
-      </div>
-    </ng-template>
-
-
     @if (errorMessage) {
       <mat-card class="error-card">
         <mat-card-content>
@@ -83,3 +60,20 @@
 
   </mat-card>
 </div>
+
+<!-- modal esqueci a senha -->
+<ng-template #forgotPasswordBody let-dialogRef="dialogRef">
+  <form (ngSubmit)="onSubmitForgotPassword(dialogRef)" autocomplete="off" class="forgot-email-input">
+    Digite o e-mail da conta que você deseja alterar a sua senha:
+    <mat-form-field appearance="outline">
+      <input matInput type="email" placeholder="E-mail" required [(ngModel)]="resetEmail" name="forgotEmail"/>
+    </mat-form-field>
+  </form>
+</ng-template>
+
+<ng-template #forgotPasswordActions let-dialogRef="dialogRef">
+  <div class="button-group">
+      <button mat-stroked-button type="button" (click)="dialogRef.close()">Fechar</button>
+      <button mat-flat-button color="primary" (click)="onSubmitForgotPassword(dialogRef)">Enviar</button>
+  </div>
+</ng-template>
