@@ -4,15 +4,13 @@
       Geek Catalog
     </mat-card-title>
 
-    <form (ngSubmit)="onSubmit()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Email</mat-label>
+        <mat-label>Email ou Username</mat-label>
         <input
           matInput
-          type="email"
-          placeholder="Digite seu e-mail"
-          [(ngModel)]="model.login"
-          name="login"
+          placeholder="Digite seu e-mail ou username"
+          formControlName="login"
           required
         />
       </mat-form-field>
@@ -23,8 +21,7 @@
           matInput
           type="password"
           placeholder="Digite sua senha"
-          [(ngModel)]="model.password"
-          name="password"
+          formControlName="password"
           required
         />
       </mat-form-field>
@@ -67,10 +64,10 @@
 
 <!-- modal esqueci a senha -->
 <ng-template #forgotPasswordBody let-dialogRef="dialogRef">
-  <form (ngSubmit)="onSubmitForgotPassword(dialogRef)" autocomplete="off" class="forgot-email-input">
+  <form [formGroup]="forgotPasswordForm" (ngSubmit)="onSubmitForgotPassword(dialogRef)" autocomplete="off" class="forgot-email-input">
     Digite o e-mail da conta que você deseja alterar a sua senha:
     <mat-form-field appearance="outline">
-      <input matInput type="email" placeholder="E-mail" required [(ngModel)]="resetEmail" name="forgotEmail"/>
+      <input matInput type="email" placeholder="E-mail" required formControlName="email"/>
     </mat-form-field>
   </form>
 </ng-template>

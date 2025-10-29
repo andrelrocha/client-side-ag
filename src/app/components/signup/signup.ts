@@ -7,25 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core'; // ou MatMomentDateModule
-import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 
 import { CreateUserService } from '../../services/users/create-user.service';
 import { CreateUserRequestDTO } from '../../dto';
 import { ERROR_MAP } from '../../utils/error-map';
 import { NotificationService } from '../../services/utils/notification.service';
-
-const BR_DATE_FORMATS = {
-    parse: { dateInput: 'DD/MM/YYYY' },
-    display: {
-      dateInput: 'DD/MM/YYYY',
-      monthYearLabel: 'MMMM YYYY',
-      dateA11yLabel: 'LL',
-      monthYearA11yLabel: 'MMMM YYYY',
-    }
-  };
+import { NavigationService } from '../../services/utils/navigation.service';
 
 @Component({
   selector: 'app-signup',
@@ -38,13 +25,6 @@ const BR_DATE_FORMATS = {
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    MatOption,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-    { provide: MAT_DATE_FORMATS, useValue: BR_DATE_FORMATS }
   ],
   templateUrl: './signup.html',
   styleUrls: ['./signup.scss']
@@ -63,12 +43,14 @@ export class Signup {
     theme: 'LIGHT',
     rolesName: ['user'],
   };
+  rolesInput: string = '';
   isLoading: boolean = false;
   errorMessage: string | null = null;
 
   constructor(
     private users: CreateUserService,
-    private notify: NotificationService
+    private notify: NotificationService,
+    private navigation: NavigationService
   ) {}
 
   onBirthdayChange(date: Date) {
@@ -79,6 +61,18 @@ export class Signup {
       const dd = date.getDate().toString().padStart(2, '0');
       this.model.birthday = `${yyyy}-${mm}-${dd}`;
     }
+  }
+
+  updateRoles() {
+    if (this.rolesInput) {
+      this.model.rolesName = this.rolesInput.split(',').map(r => r.trim()).filter(Boolean);
+    } else {
+      this.model.rolesName = [];
+    }
+  }
+
+  goLogin() {
+    this.navigation.goLogin();
   }
 
   onSubmit(): void {

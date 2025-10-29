@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -13,7 +13,6 @@ import { ViewChild, TemplateRef } from '@angular/core';
 import { Modal } from '../';
 import { ERROR_MAP } from '../../utils/error-map';
 import { NotificationService } from '../../services/utils/notification.service';
-import { AuthValidationService } from '../../services/validation/auth-validation.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { NavigationService } from '../../services/utils/navigation.service';
 import { ForgotPasswordRequestDTO, SignInRequestDTO } from '../../dto';
@@ -23,22 +22,20 @@ import { ForgotPasswordRequestDTO, SignInRequestDTO } from '../../dto';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    ReactiveFormsModule
 ],
   templateUrl: './signin.html',
   styleUrls: ['./signin.scss']
 })
 export class Signin {
-  model: SignInRequestDTO = {
-    login: '',
-    password: ''
-  };
+  form: FormGroup;
+  forgotPasswordForm: FormGroup;
   resetEmail: string = '';
   isLoading: boolean = false;
   errorMessage: string | null = null;
@@ -48,11 +45,19 @@ export class Signin {
 
   constructor(
     private auth: AuthService,
-    private authValidation: AuthValidationService,
     private navigation: NavigationService,
     private dialog: MatDialog,
     private notify: NotificationService
-  ) {}
+  ) {
+    this.form = new FormGroup({
+      login: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
+    });
+
+    this.forgotPasswordForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email])
+    });
+  }
 
   openForgotPasswordModal() {
     this.dialog.open(Modal, {
@@ -67,15 +72,22 @@ export class Signin {
   }
 
   onSubmit(): void {
-    const error = this.authValidation.validateSignInFields(this.model);
-    if (error) {
-      this.errorMessage = error;
-      return this.notify.error(error);
+    if (this.form.invalid) {
+      const loginControl = this.form.get('login');
+      const passwordControl = this.form.get('password');
+
+      if (loginControl?.hasError('required')) {
+        return this.notify.error("Campo 'Email ou Username' é obrigatório.");
+      }
+
+      if (passwordControl?.hasError('required')) {
+        return this.notify.error("Campo 'Senha' é obrigatório.");
+      }
     }
 
     this.isLoading = true;
 
-    this.auth.login(this.model)
+    this.auth.login(this.form.value as SignInRequestDTO)
       .subscribe({
         next: (response) => {
           const token = response.data?.token;
@@ -100,16 +112,21 @@ export class Signin {
   }
 
   onSubmitForgotPassword(dialogRef: any) {
-    const error = this.authValidation.validateForgotPasswordEmail(this.resetEmail);
-    if (error) return this.notify.error(error);
+    if (this.forgotPasswordForm.invalid) {
+      const emailControl = this.forgotPasswordForm.get('forgotEmail');
+
+      if (emailControl?.hasError('required')) {
+        return this.notify.error("Campo 'Email' é obrigatório para recuperação de senha.");
+      }
+
+      if (emailControl?.hasError('email')) {
+        return this.notify.error("O e-mail informado não é válido.");
+      }
+    }
 
     dialogRef.componentInstance.isLoading = true;
 
-    const data: ForgotPasswordRequestDTO = {
-      email: this.resetEmail
-    };
-
-    this.auth.forgotPassword(data)
+    this.auth.forgotPassword(this.forgotPasswordForm.value as ForgotPasswordRequestDTO)
       .subscribe({
         next: () => {
           dialogRef.componentInstance.isLoading = false;
@@ -121,5 +138,5 @@ export class Signin {
           this.notify.error('Erro ao enviar o email de recuperação.');
         }
       });
-  }
+    }
 }

@@ -1,69 +1,32 @@
 <div class="signup-container">
   <mat-card class="signup-card">
     <mat-card-title class="signup-title">
-      Cadastro Geek Catalog
+      Novo por aqui? Cadastre-se!
     </mat-card-title>
 
     <form (ngSubmit)="onSubmit()">
+
       <mat-form-field appearance="outline" class="form-field">
         <mat-label>Nome</mat-label>
-        <input matInput type="text" required [(ngModel)]="model.name" name="name" />
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Usuário</mat-label>
-        <input matInput type="text" required [(ngModel)]="model.username" name="username" />
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" required [(ngModel)]="model.email" name="email" />
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Senha</mat-label>
-        <input matInput type="password" required [(ngModel)]="model.password" name="password" />
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Telefone</mat-label>
-        <input matInput type="text" required [(ngModel)]="model.phone" name="phone" />
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Data de Nascimento</mat-label>
         <input
           matInput
-          [matDatepicker]="picker"
-          [value]="model.birthday ? (model.birthday | date:'dd/MM/yyyy') : null"
-          (dateChange)="onBirthdayChange($event.value)"
+          type="text"
+          placeholder="Digite seu nome"
           required
-          name="birthday"
+          [(ngModel)]="model.name"
+          name="name"
         />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="form-field">
-        <mat-label>País</mat-label>
-        <input matInput type="text" required [(ngModel)]="model.countryId" name="countryId" />
       </mat-form-field>
 
-      <mat-checkbox [(ngModel)]="model.twoFactorEnabled" name="twoFactorEnabled">
-        Ativar 2FA
-      </mat-checkbox>
-      <mat-checkbox [(ngModel)]="model.refreshTokenEnabled" name="refreshTokenEnabled">
-        Ativar Refresh Token
-      </mat-checkbox>
-      <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Tema</mat-label>
-        <mat-select [(ngModel)]="model.theme" name="theme">
-          <mat-option value="LIGHT">Claro</mat-option>
-          <mat-option value="DARK">Escuro</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Roles</mat-label>
-        <input matInput type="text" required [(ngModel)]="model.rolesName" name="rolesName" placeholder="Ex: ADMIN,user" />
-      </mat-form-field>
 
       <button mat-flat-button color="primary" type="submit" [disabled]="isLoading">
         @if (isLoading) { Carregando... } @else { Cadastrar }
       </button>
+      <div style="margin-top: 1rem; text-align: right;">
+        <button mat-button color="primary" type="button" (click)="goLogin()">
+          Já possui conta? Fazer login
+        </button>
+      </div>
     </form>
 
     @if (errorMessage) {
