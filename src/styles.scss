@@ -65,33 +65,18 @@ a:hover {
   text-decoration: underline;
 }
 
-.mr-8 {
-  margin-right: 8px;
-}
-
-.error-snackbar {
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
 .error-snackbar .mdc-snackbar__surface {
   background: var(--mat-sys-error-container) !important;
   color: var(--mat-sys-on-error-container) !important;
   border-radius: 1.2rem !important;
-  box-shadow: 0 6px 32px var(--mat-sys-shadow, rgba(44, 52, 65, 0.10)) !important;
+
+  .mat-mdc-button {
+    color: var(--mat-sys-primary) !important;
+  }
 }
 
 .success-snackbar .mdc-snackbar__surface {
   background: var(--mat-sys-primary) !important;
   color: var(--mat-sys-on-primary) !important;
   border-radius: 1.2rem !important;
-  box-shadow: 0 6px 32px var(--mat-sys-shadow, rgba(44, 52, 65, 0.10)) !important;
-}
-
-.mat-mdc-snack-bar-container {
-    &.success-snackbar {
-      --mdc-snackbar-container-color: #2196f3;
-      --mat-mdc-snack-bar-button-color: #fff;
-      --mdc-snackbar-supporting-text-color: #fff;
-    }
 }

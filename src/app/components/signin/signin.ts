@@ -72,18 +72,17 @@ export class Signin {
       return;
     }
 
-    // Aqui, envie a solicitação de recuperação
-    // Exemplo de loading e mock de sucesso:
-    dialogRef.disableClose = true;
-    dialogRef.componentInstance.isLoading = true;
-
-    setTimeout(() => {
-      dialogRef.componentInstance.isLoading = false;
-      dialogRef.close();
-      this.snackBar.open('E-mail de recuperação enviado!', 'Fechar', {
-        duration: 4000, verticalPosition: 'top', panelClass: ['success-snackbar']
-      });
-    }, 2000);
+    this.authService.forgotPassword(this.resetEmail).subscribe({
+      next: () => {
+        dialogRef.componentInstance.isLoading = false;
+        dialogRef.close();
+        this.showSuccess('Se o email de recuperação existir, você receberá um link para redefinição de senha.');
+      },
+      error: (err) => {
+        dialogRef.componentInstance.isLoading = false;
+        this.showError('Erro ao enviar o email de recuperação.');
+      }
+    });
   }
 
   validateForgotPasswordEmail(): string | null {
