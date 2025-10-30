@@ -73,6 +73,14 @@ export class Signup {
     this.navigation.goLogin();
   }
 
+  handleError(err: any) {
+    const backendError = err?.error?.error;
+    const errorKey = backendError?.name;
+    const errorObj = ERROR_MAP[errorKey];
+    this.notify.error(errorObj?.message || 'Erro ao criar usuário.');
+    this.errorMessage = `${errorObj?.key}: ${errorObj?.message || backendError?.message}`;
+  }
+
   onSubmit(): void {
     if (this.signUpForm.invalid) {
       this.signUpForm.markAllAsTouched();
@@ -86,36 +94,32 @@ export class Signup {
 
     //formato yyyy-mm-dd
     const formattedBirthday = new Date(birthday).toISOString().split('T')[0];
+    const formattedPhone = phone.replace(' ', '');
 
-    const simulatedData: CreateUserRequestDTO = {
+    const data: CreateUserRequestDTO = {
       ...rest,
-      phone: phone.replace(' ', ''),
+      phone: formattedPhone,
       birthday: formattedBirthday,
+      //não tem essas opções no formulário, então valores padrão
       countryId: 'b8d9c92a-7a0b-4d2f-91cd-582f8c3478e4',
       theme: 'LIGHT',
       rolesName: ['USER'],
     };
 
-    console.log('Simulated signup data:', simulatedData);
-
-    /*
-    this.users.createUser(simulatedData)
-      .subscribe({
-        next: () => {
-          this.isLoading = false;
+    this.users.createUser(data).subscribe({
+      next: (result) => {
+        if (result?.data) {
           this.notify.success('Cadastro realizado com sucesso!');
           this.goLogin();
-        },
-        error: (err) => {
-          const backendError = err?.error?.error;
-          const errorKey = backendError?.name;
-          const errorObj = ERROR_MAP[errorKey];
-          this.notify.error(errorObj?.message || 'Erro ao criar usuário.');
-          this.errorMessage = `${errorObj?.key}: ` + (errorObj?.message == null ? backendError?.message : errorObj?.message);
-          this.isLoading = false;
-        },
-        complete: () => this.isLoading = false
-      });
-    */
+        } else {
+          this.handleError(result?.error);
+        }
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.handleError(err);
+        this.isLoading = false;
+      }
+    });
   }
 }
