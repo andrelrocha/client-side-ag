@@ -12,7 +12,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 
-import { CreateUserService } from '../../services/users/create-user.service';
+import { CreateUserService } from '../../services/users/users.service';
 import { CreateUserRequestDTO } from '../../dto';
 import { ERROR_MAP } from '../../utils/error-map';
 import { NotificationService } from '../../services/utils/notification.service';

@@ -1,8 +1,9 @@
-import { ApiResponseDTO, MessageResponseDTO } from "./api-response.dto";
-import { SignInRequestDTO, SignInResponseDTO, ForgotPasswordRequestDTO } from "./auth.dto";
+import { ApiResponseDTO, MessageResponseDTO, Page } from "./api-response.dto";
+import { SignInRequestDTO, TokenResponseDTO, ForgotPasswordRequestDTO } from "./auth.dto";
 import { CreateUserRequestDTO, CreateUserResponseDTO } from "./users.dto";
 import { RoleResponseDTO } from "./roles.dto";
 import { CountryResponseDTO } from "./countries.dto";
+import { GameResponseDTO } from "./games.dto";
 
 export type {
   ApiResponseDTO,
@@ -10,8 +11,10 @@ export type {
   CreateUserRequestDTO,
   CreateUserResponseDTO,
   ForgotPasswordRequestDTO,
+  GameResponseDTO,
   MessageResponseDTO,
+  Page,
   RoleResponseDTO,
   SignInRequestDTO,
-  SignInResponseDTO,
+  TokenResponseDTO,
 }

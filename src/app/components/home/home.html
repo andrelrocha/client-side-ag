@@ -1,4 +1,11 @@
 <div class="home-container">
-  <h1>Bem-vindo, {{ userEmail || 'usuário' }}!</h1>
-  <button (click)="listarJogos()">Listar Jogos</button>
+  <mat-card class="form-card">
+    <mat-card-title class="home-title">Bem-vindo, {{ userEmail || 'usuário' }}!</mat-card-title>
+    <mat-card-content class="home-content">
+      <p>Gerencie sua coleção de Jogos aqui.</p>
+      <button mat-flat-button color="primary" (click)="listarJogos()">
+        Listar Jogos
+      </button>
+    </mat-card-content>
+  </mat-card>
 </div>

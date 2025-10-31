@@ -3,7 +3,7 @@ export interface SignInRequestDTO {
   password: string;
 }
 
-export interface SignInResponseDTO {
+export interface TokenResponseDTO {
   token: string;
 }
 
